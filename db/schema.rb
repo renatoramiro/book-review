@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_24_231620) do
+ActiveRecord::Schema.define(version: 2018_07_26_222750) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bookcases", force: :cascade do |t|
+    t.bigint "book_id"
+    t.bigint "reader_id"
+    t.integer "evaluation"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_bookcases_on_book_id"
+    t.index ["reader_id"], name: "index_bookcases_on_reader_id"
+  end
 
   create_table "books", force: :cascade do |t|
     t.string "title"
@@ -32,5 +42,14 @@ ActiveRecord::Schema.define(version: 2018_07_24_231620) do
     t.index ["book_id"], name: "index_comments_on_book_id"
   end
 
+  create_table "readers", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "bookcases", "books"
+  add_foreign_key "bookcases", "readers"
   add_foreign_key "comments", "books"
 end
