@@ -4,7 +4,8 @@ Rails.application.routes.draw do
       resources :comments
     end
 
-    resources :readers
-    resources :bookcases
+    resources :readers do
+      resources :bookcases
+    end
   end
 end

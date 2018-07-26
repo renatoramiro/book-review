@@ -1,30 +1,31 @@
 class Api::BookcasesController < ApplicationController
   before_action :set_bookcase, only: [:show, :update, :destroy]
 
-  # GET /bookcases
+  # GET /api/bookcases
   def index
-    @bookcases = Bookcase.all
+    @bookcases = Bookcase.where(reader_id: params[:reader_id])
 
     render json: @bookcases
   end
 
-  # GET /bookcases/1
+  # GET /api/bookcases/1
   def show
     render json: @bookcase
   end
 
-  # POST /bookcases
+  # POST /api/bookcases
   def create
     @bookcase = Bookcase.new(bookcase_params)
+    @bookcase.reader_id = params[:reader_id]
 
     if @bookcase.save
-      render json: @bookcase, status: :created, location: [:api, @bookcase]
+      render json: @bookcase, status: :created, location: [:api, @bookcase.reader, @bookcase]
     else
       render json: @bookcase.errors, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /bookcases/1
+  # PATCH/PUT /api/bookcases/1
   def update
     if @bookcase.update(bookcase_params)
       render json: @bookcase
@@ -33,7 +34,7 @@ class Api::BookcasesController < ApplicationController
     end
   end
 
-  # DELETE /bookcases/1
+  # DELETE /api/bookcases/1
   def destroy
     @bookcase.destroy
   end

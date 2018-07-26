@@ -8,12 +8,12 @@ class Api::ReadersController < ApplicationController
     render json: @readers
   end
 
-  # GET /readers/1
+  # GET /api/readers/1
   def show
     render json: @reader
   end
 
-  # POST /readers
+  # POST /api/readers
   def create
     @reader = Reader.new(reader_params)
 
@@ -24,7 +24,7 @@ class Api::ReadersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /readers/1
+  # PATCH/PUT /api/readers/1
   def update
     if @reader.update(reader_params)
       render json: @reader
@@ -33,7 +33,7 @@ class Api::ReadersController < ApplicationController
     end
   end
 
-  # DELETE /readers/1
+  # DELETE /api/readers/1
   def destroy
     @reader.destroy
   end

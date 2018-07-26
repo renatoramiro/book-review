@@ -5,6 +5,8 @@ class Book < ApplicationRecord
   validates :review, presence: true
 
   has_many :comments
+  has_many :book_comments, through: :comments, source: :reader
+
   has_many :bookcases
   has_many :readers, through: :bookcases
 end

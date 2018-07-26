@@ -4,4 +4,7 @@ class Reader < ApplicationRecord
 
   has_many :bookcases
   has_many :books, through: :bookcases
+
+  has_many :comments
+  has_many :reader_comments, through: :comments, source: :book
 end
