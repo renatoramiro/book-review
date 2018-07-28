@@ -1,19 +1,29 @@
 class Api::BooksController < ApplicationController
   before_action :set_book, only: [:show, :update, :destroy]
 
-  # GET /books
+  # GET /api/books
   def index
     @books = Book.all
 
     render json: @books
   end
 
-  # GET /books/1
+  def search
+    @books = if params[:search]
+      Book.where('title like ?', "%#{params[:search]}%")
+    else
+      Book.all
+    end
+
+    render json: @books
+  end
+
+  # GET /api/books/1
   def show
     render json: @book
   end
 
-  # POST /books
+  # POST /api/books
   def create
     @book = Book.new(book_params)
 
@@ -24,7 +34,7 @@ class Api::BooksController < ApplicationController
     end
   end
 
-  # PATCH/PUT /books/1
+  # PATCH/PUT /api/books/1
   def update
     if @book.update(book_params)
       render json: @book
@@ -33,7 +43,7 @@ class Api::BooksController < ApplicationController
     end
   end
 
-  # DELETE /books/1
+  # DELETE /api/books/1
   def destroy
     @book.destroy
   end
